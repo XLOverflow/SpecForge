@@ -7,7 +7,10 @@ from torch.nn.attention.flex_attention import (
 )
 from transformers.utils import is_torchdynamo_compiling
 
-dynamo.config.recompile_limit = 64
+try:
+    dynamo.config.recompile_limit = 64
+except AttributeError:
+    pass  # attribute removed in newer PyTorch versions
 
 
 # Reference Implementation https://github.com/huggingface/transformers/blob/main/src/transformers/integrations/flex_attention.py
